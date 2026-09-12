@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jvisualschool | 바이브 코딩 & 비주얼 스토리텔링</title>
+<meta name="description" content="정진호 - 교수, 디자이너, 일러스트레이터, 작가. 바이브 코딩과 비주얼 스토리텔링을 연구하고 공유합니다.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { font-family: 'Noto Sans KR', 'Inter', sans-serif; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  nav.top { display:flex; align-items:center; justify-content:space-between; padding:26px 0; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; }
+  .logo i { color: var(--accent); }
+  nav.top .links a { color: var(--text-sub); margin-left: 22px; font-size: 14px; }
+  nav.top .links a:hover { color: var(--accent); }
+
+  .hero { padding: 70px 0 50px; text-align: left; }
+  .hero h1 { font-size: 44px; font-weight: 900; line-height: 1.25; margin: 18px 0; }
+  .hero h1 span { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { color: var(--text-sub); font-size: 17px; max-width: 620px; }
+  .hero-actions { display:flex; gap:14px; margin-top: 28px; flex-wrap: wrap; }
+
+  .role-chips { display:flex; gap:8px; flex-wrap:wrap; margin-top: 18px; }
+  .role-chip { font-size:12px; padding:5px 12px; border-radius:999px; border:1px solid var(--line); color: var(--text-sub); }
+
+  .grid-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; margin-top: 60px; }
+  .link-card { padding: 24px; display:flex; flex-direction:column; gap: 10px; transition: transform .15s ease; }
+  .link-card:hover { transform: translateY(-4px); }
+  .link-card i { font-size: 22px; color: var(--accent); }
+  .link-card h3 { margin: 4px 0 0; font-size: 16px; }
+  .link-card p { margin: 0; color: var(--text-sub); font-size: 13px; }
+
+  .cta-section { margin-top: 70px; padding: 40px 32px; text-align:center; }
+  .cta-section h2 { font-size: 24px; margin: 0 0 10px; }
+  .cta-section p { color: var(--text-sub); margin: 0 0 22px; }
+
+  footer { margin-top: 70px; padding: 30px 0 50px; color: var(--text-sub); font-size: 13px; display:flex; flex-wrap:wrap; gap: 16px; align-items:center; justify-content:space-between; }
+  footer .social a { color: var(--text-sub); margin-right: 16px; font-size: 16px; }
+  footer .social a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="grid-noise"></div>
+
+<div class="wrap">
+  <nav class="top">
+    <div class="logo"><i class="fa-solid fa-brain"></i> jvisualschool</div>
+    <div class="links">
+      <a href="https://jvibeschool.com/blog/" target="_blank" rel="noopener">블로그</a>
+      <a href="https://github.com/jvisualschool/" target="_blank" rel="noopener">GitHub</a>
+      <a href="survey.html">피드백 설문</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <span class="badge"><i class="fa-solid fa-terminal"></i> Vibe Coding Everyday</span>
+    <h1>바이브 코딩으로 그리는<br><span>비주얼 스토리텔링</span></h1>
+    <p>
+      정진호 — 교수 · 디자이너 · 일러스트레이터 · 작가.
+      Google Antigravity, Claude Code를 매일 사용하며 CLI 기반의 개발/제작 워크플로우를 연구하고 공유합니다.
+    </p>
+    <div class="role-chips">
+      <span class="role-chip">#UIUX</span>
+      <span class="role-chip">#바이브코딩</span>
+      <span class="role-chip">#일러스트레이션</span>
+      <span class="role-chip">#AWS Lightsail</span>
+      <span class="role-chip">#CLI 우선</span>
+    </div>
+    <div class="hero-actions">
+      <a href="survey.html" class="btn btn-primary"><i class="fa-solid fa-comment-dots"></i> 방문 피드백 남기기</a>
+      <a href="https://jvibeschool.com/blog/" target="_blank" rel="noopener" class="btn btn-ghost"><i class="fa-solid fa-blog"></i> 블로그 보러가기</a>
+    </div>
+  </section>
+
+  <section class="grid-links">
+    <a class="panel link-card" href="https://jvibeschool.com/blog/" target="_blank" rel="noopener">
+      <i class="fa-solid fa-blog"></i>
+      <h3>jvibeschool 블로그</h3>
+      <p>바이브 코딩 학습 기록과 작업 노트</p>
+    </a>
+    <a class="panel link-card" href="https://github.com/jvisualschool/" target="_blank" rel="noopener">
+      <i class="fa-brands fa-github"></i>
+      <h3>GitHub</h3>
+      <p>코드와 프로젝트 공유</p>
+    </a>
+    <a class="panel link-card" href="https://www.instagram.com/jvisualschool/" target="_blank" rel="noopener">
+      <i class="fa-brands fa-instagram"></i>
+      <h3>Instagram</h3>
+      <p>디자인/일러스트 작업 기록</p>
+    </a>
+    <a class="panel link-card" href="https://www.threads.com/@jvisualschool" target="_blank" rel="noopener">
+      <i class="fa-brands fa-threads"></i>
+      <h3>Threads</h3>
+      <p>짧은 생각과 근황</p>
+    </a>
+    <a class="panel link-card" href="https://www.facebook.com/jinho.jung" target="_blank" rel="noopener">
+      <i class="fa-brands fa-facebook"></i>
+      <h3>Facebook</h3>
+      <p>소식과 네트워킹</p>
+    </a>
+    <a class="panel link-card" href="mailto:jvisualschool@gmail.com">
+      <i class="fa-solid fa-envelope"></i>
+      <h3>협업 문의</h3>
+      <p>jvisualschool@gmail.com</p>
+    </a>
+  </section>
+
+  <section class="panel cta-section">
+    <h2>이 사이트, 어떠셨나요?</h2>
+    <p>1분이면 충분합니다. 방문 경로, 첫인상, 원하는 정보를 찾기 쉬웠는지 알려주세요.</p>
+    <a href="survey.html" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> 피드백 설문 시작하기</a>
+  </section>
+
+  <footer>
+    <span>&copy; 2026 jvisualschool · 정진호</span>
+    <span class="social">
+      <a href="https://www.facebook.com/jinho.jung" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i></a>
+      <a href="https://www.instagram.com/jvisualschool/" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.threads.com/@jvisualschool" target="_blank" rel="noopener"><i class="fa-brands fa-threads"></i></a>
+      <a href="https://github.com/jvisualschool/" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+      <a href="https://www.jvisualschool.com/" target="_blank" rel="noopener"><i class="fa-solid fa-globe"></i></a>
+    </span>
+  </footer>
+</div>
+
+</body>
+</html>

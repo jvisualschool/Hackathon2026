@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>피드백 관리자 대시보드 | jvisualschool</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body { font-family: 'Noto Sans KR', 'Inter', sans-serif; }
+  .layout { max-width: 1180px; margin: 0 auto; padding: 32px 20px 80px; }
+  .stat-card { padding: 20px; text-align: left; }
+  .stat-num { font-size: 30px; font-weight: 800; }
+  .stat-label { font-size: 13px; color: var(--text-sub); margin-top: 4px; }
+  .chart-box { position: relative; height: 260px; padding: 20px; }
+  .tabs { display: flex; gap: 8px; margin: 28px 0 16px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line);
+    background: transparent; color: var(--text-sub); cursor: pointer; font-size: 13px;
+  }
+  .tab-btn.active { background: var(--accent); color: #04101a; border-color: var(--accent); font-weight: 700; }
+  #responses-table-wrap { max-height: 520px; overflow: auto; }
+  .answer-cell { max-width: 260px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .search-input {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 10px;
+    color: var(--text-main); padding: 8px 12px; font-size: 14px; min-width: 220px;
+  }
+</style>
+</head>
+<body>
+<div class="grid-noise"></div>
+
+<div class="layout">
+  <header style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <i class="fa-solid fa-chart-line" style="color:var(--accent);font-size:22px;"></i>
+      <div>
+        <h1 style="margin:0;font-size:22px;font-weight:800;">방문자 피드백 관리자</h1>
+        <p style="margin:2px 0 0;color:var(--text-sub);font-size:13px;">survey_responses 테이블 기반 실시간 집계</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button id="refresh-btn" class="btn btn-ghost"><i class="fa-solid fa-rotate"></i> 새로고침</button>
+      <button id="export-csv-btn" class="btn btn-primary"><i class="fa-solid fa-file-csv"></i> CSV 내보내기</button>
+    </div>
+  </header>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:24px;">
+    <div class="panel stat-card">
+      <div class="stat-num" id="stat-total">0</div>
+      <div class="stat-label"><i class="fa-solid fa-inbox"></i> 총 응답 수</div>
+    </div>
+    <div class="panel stat-card">
+      <div class="stat-num" id="stat-today">0</div>
+      <div class="stat-label"><i class="fa-solid fa-calendar-day"></i> 오늘 응답</div>
+    </div>
+    <div class="panel stat-card">
+      <div class="stat-num" id="stat-top-referrer">-</div>
+      <div class="stat-label"><i class="fa-solid fa-share-nodes"></i> 최다 유입 경로</div>
+    </div>
+    <div class="panel stat-card">
+      <div class="stat-num" id="stat-top-impression">-</div>
+      <div class="stat-label"><i class="fa-solid fa-face-smile"></i> 최다 첫인상</div>
+    </div>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px;">
+    <div class="panel chart-box"><canvas id="chart-q1"></canvas></div>
+    <div class="panel chart-box"><canvas id="chart-q2"></canvas></div>
+    <div class="panel chart-box"><canvas id="chart-q3"></canvas></div>
+    <div class="panel chart-box"><canvas id="chart-q4"></canvas></div>
+  </section>
+
+  <section class="panel" style="margin-top:24px;padding:22px;">
+    <h2 style="margin-top:0;font-size:16px;display:flex;align-items:center;gap:8px;">
+      <i class="fa-solid fa-comment"></i> 5번 문항: 인상 깊었던 콘텐츠 (원문)
+    </h2>
+    <div id="text-answers-list" style="display:flex;flex-direction:column;gap:10px;max-height:260px;overflow:auto;"></div>
+  </section>
+
+  <section class="panel" style="margin-top:24px;padding:22px;">
+    <div class="toolbar">
+      <h2 style="margin:0;font-size:16px;display:flex;align-items:center;gap:8px;">
+        <i class="fa-solid fa-table-list"></i> 전체 응답 목록
+      </h2>
+      <input type="text" id="search-input" class="search-input" placeholder="검색 (경로, 답변, UA 등)">
+    </div>
+    <div id="responses-table-wrap" class="scrollbar-thin">
+      <table class="data-table" id="responses-table">
+        <thead>
+          <tr>
+            <th>제출시각</th>
+            <th>Q1 유입경로</th>
+            <th>Q2 관심정보</th>
+            <th>Q3 첫인상</th>
+            <th>Q4 탐색편의</th>
+            <th>Q5 콘텐츠</th>
+            <th>Referrer</th>
+          </tr>
+        </thead>
+        <tbody id="responses-tbody"></tbody>
+      </table>
+    </div>
+    <p id="empty-state" style="display:none;color:var(--text-sub);text-align:center;padding:24px 0;">아직 수집된 응답이 없습니다.</p>
+  </section>
+
+  <footer style="margin-top:30px;text-align:center;color:var(--text-sub);font-size:12px;">
+    이 페이지는 접근 제어가 적용되어 있으며, 지정된 관리자 계정으로만 열람 가능합니다.
+  </footer>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
